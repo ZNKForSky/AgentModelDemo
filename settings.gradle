@@ -1,0 +1,3 @@
+rootProject.name='AgentModelDemo'
+include ':app'
+include ':lib'

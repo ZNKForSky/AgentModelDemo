@@ -127,46 +127,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * MyRetrofit的GTT请求获取天气信息
      */
     private void getWeatherInfoByMyRetrofit() {
-        Call<ResponseBody> call = myWeatherApi.getWeather("110101", "ae6c53e2186f33bbf240a12d80672d1b");
-        call.enqueue(new Callback<ResponseBody>() {
+        okhttp3.Call call = myWeatherApi.getWeather("110101", "ae6c53e2186f33bbf240a12d80672d1b");
+        call.enqueue(new okhttp3.Callback() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onFailure(okhttp3.Call call, IOException e) {
+                Log.e(TAG, "我的GET请求 ------ onFailure: " + e);
+            }
+
+            @Override
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    try {
-                        Log.i(TAG, "MyRetrofit GET请求 ------ onResponse: " + response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Log.i(TAG, "我的GET请求 ------ onResponse: " + response.body().string());
                 }
             }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
         });
+
     }
 
     /**
      * MyRetrofit的POST请求获取天气信息
      */
     private void postWeatherInfoByMyRetrofit() {
-        Call<ResponseBody> call = myWeatherApi.postWeather("110101", "ae6c53e2186f33bbf240a12d80672d1b");
-        call.enqueue(new Callback<ResponseBody>() {
+        okhttp3.Call call = myWeatherApi.postWeather("110101", "ae6c53e2186f33bbf240a12d80672d1b");
+        call.enqueue(new okhttp3.Callback() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        Log.i(TAG, "MyRetrofit POST请求 ------ onResponse: " + response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+            public void onFailure(okhttp3.Call call, IOException e) {
+                Log.e(TAG, "onFailure: " + e);
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Log.i(TAG, "我的POST请求 ------ onResponse: " + response.body().string());
+                }
             }
         });
     }

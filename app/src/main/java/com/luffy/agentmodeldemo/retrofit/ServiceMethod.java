@@ -19,13 +19,13 @@ class ServiceMethod {
     private static Annotation[] annotations;
     private static Annotation[][] parameterAnnotations;
     private static ParameterHandler[] parameterHandlers;
-    private final Call.Factory mCallFatory;
+    private Call.Factory mCallFatory;
     //请求方式
     private static String httpMethod;
     //标记是否有请求体，默认没有
     private static boolean hasBody;
     //让ServiceMethod持有MyRetrofit的一个实例
-    private final MyRetrofit myRetrofit;
+    private MyRetrofit myRetrofit;
     //请求的基础URL
     private HttpUrl baseUrl;
     //完整的请求地址
@@ -43,6 +43,7 @@ class ServiceMethod {
     public ServiceMethod(MyRetrofit myRetrofit) {
         this.myRetrofit = myRetrofit;
         mCallFatory = myRetrofit.mCallFatory;
+        baseUrl = myRetrofit.mBaseUrl;
         //如果是有请求体,创建一个okhttp的请求体对象
         if (hasBody) {
             formBuild = new FormBody.Builder();
@@ -143,9 +144,10 @@ class ServiceMethod {
             parameterHandler.apply(this, args[i].toString());
         }
         //2.如果是POST请求，势必urlBuild为空
-        if(urlBuilder == null){
+        if (urlBuilder == null) {
             //2.1 此时需要将baseUrl和router(路由)拼接
             finalUrl = baseUrl.newBuilder(router).build();
+            formBody = formBuild.build();
         }
         Request request = new Request.Builder().url(finalUrl).method(httpMethod, formBody).build();
         return mCallFatory.newCall(request);

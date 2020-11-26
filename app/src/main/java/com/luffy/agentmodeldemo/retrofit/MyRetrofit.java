@@ -27,7 +27,7 @@ public class MyRetrofit {
     private final Map<Method, ServiceMethod> serviceMethodCache = new ConcurrentHashMap<>();
     //Call.Factory的唯一实现类OkHttpClient
     final Call.Factory mCallFatory;
-    private HttpUrl mBaseUrl;
+    protected HttpUrl mBaseUrl;
 
     public MyRetrofit(Call.Factory callFactory, HttpUrl baseUrl) {
         mCallFatory = callFactory;

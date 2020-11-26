@@ -8,6 +8,9 @@ package com.luffy.agentmodeldemo.retrofit;
 public abstract class ParameterHandler {
     abstract void apply(ServiceMethod serviceMethod, String value);
 
+    /**
+     * 处理POST请求的参数
+     */
     static class FieldParameterHandler extends ParameterHandler {
         private String mKey;
 
@@ -17,10 +20,13 @@ public abstract class ParameterHandler {
 
         @Override
         void apply(ServiceMethod serviceMethod, String value) {
-            serviceMethod.addQueryParameter(mKey, value);
+            serviceMethod.addFieldParameter(mKey, value);
         }
     }
 
+    /**
+     * 处理GET请求的参数
+     */
     static class QueryParameterHandler extends ParameterHandler {
         private String mKey;
 
@@ -30,8 +36,7 @@ public abstract class ParameterHandler {
 
         @Override
         void apply(ServiceMethod serviceMethod, String value) {
-            serviceMethod.addFieldParameter(mKey, value);
-
+            serviceMethod.addQueryParameter(mKey, value);
         }
     }
 }

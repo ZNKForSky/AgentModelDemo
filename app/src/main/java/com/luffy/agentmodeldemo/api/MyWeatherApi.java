@@ -6,8 +6,7 @@ import com.luffy.agentmodeldemo.retrofit.POST;
 import com.luffy.agentmodeldemo.retrofit.Query;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.http.FormUrlEncoded;
+import okhttp3.Call;
 
 
 /**
@@ -17,10 +16,9 @@ import retrofit2.http.FormUrlEncoded;
  */
 public interface MyWeatherApi {
     @POST("/v3/weather/weatherInfo")
-    @FormUrlEncoded
-    Call<ResponseBody> postWeather(@Field("city") String city, @Field("key") String key);
+    Call postWeather(@Field("city") String city, @Field("key") String key);
 
 
     @GET("/v3/weather/weatherInfo")
-    Call<ResponseBody> getWeather(@Query("city") String city, @Query("key") String key);
+    Call getWeather(@Query("city") String city, @Query("key") String key);
 }
